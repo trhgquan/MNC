@@ -105,7 +105,7 @@
 %% sample for unstructured abstract %%
 %%==================================%%
 
-\abstract{Text classification has been a fundamental task since the early days of Natural Language Processing. Recently, the invention of large language models such as BERT, RoBERTa, XLM, and others has started a revolution in Natural Language Processing, specifically in Text Classification and text-related tasks. However, these models require an enormous contextual dataset, a high-cost training environment, and a long training time to achieve a notable result. This paper presents a novel approach to Text Classification using a lighter, cheaper, faster version of BERT called DistilBERT. By fine-tuning DistilBERT for the Text Classification task, we achieved a state-of-the-art result of 97,40\%, 97,61\%, 97,74\%, and 97,64\% in accuracy, macro precision, macro recall, and macro F1 respectively. With these evaluation metrics, our model outperformed the current state-of-the-art language model and other approaches in the text classification task.}
+\abstract{Text classification has been a fundamental task since the early days of Natural Language Processing. Recently, the invention of large language models such as BERT, RoBERTa, XLM, and others has started a revolution in Natural Language Processing, specifically in Text Classification and text-related tasks. However, these models require an enormous textual dataset, a high-cost training environment, and a long training time to achieve a notable result. This paper presents a novel approach to Text Classification using a lighter, cheaper, faster version of BERT called DistilBERT. By fine-tuning DistilBERT for the Text Classification task, we achieved a state-of-the-art result of 97,40\%, 97,61\%, 97,74\%, and 97,64\% in accuracy, macro precision, macro recall, and macro F1 respectively. With these evaluation metrics, our model outperformed the current state-of-the-art language model and other approaches in the text classification task.}
 
 %%================================%%
 %% Sample for structured abstract %%
@@ -121,7 +121,7 @@
 
 \keywords{Text classification, Natural language processing, Deep learning, Knowledge distillation, Pretrained language models}
 
-%%\pacs[JEL Classification]{D8, H51}
+% \pacs[JEL Classification]{D8, H51}
 
 %%\pacs[MSC Classification]{35A01, 65L10, 65L12, 65L20, 65L70}
 
@@ -131,15 +131,17 @@
 sede vacante
 
 \section{Related works}\label{relatedworks}
+In general, text classification methods can be divided into two main branches: shallow approaches and deep learning approaches. Shallow approaches are traditional machine-learning techniques that involve the extraction of hand-crafted features from the text, while deep-learning approaches can automatically extract complex features from the text without requiring a feature engineering step. Overall, each branch has its pros and cons which will be presented in the next sections, respectively.
+
 \subsection{Shallow machine-learning models}
 
-Shallow machine-learning approaches are traditional machine-learning techniques that involve the extraction of hand-crafted features from the text. Early approaches to the Text Classification problem using rule-based systems where an expert suggests a rule for classifying text, based on the semantics and pragmatics of the data. Later on, several methods including Naive Bayes\cite{Xu2017}, Decision Trees\cite{Safavian1991}, Logistic Regression\cite{Genkin2007} and Support Vector Machine (SVM)\cite{boser1992, cortesvapnik1995} were proposed with the concept of using the probability of tokens to predict if a document belongs to a specific class. 
+Early approach to the Text Classification problem using rule-based systems where an expert suggests a rule for classifying text, based on the semantics and pragmatics of the data. Later on, several methods including Naive Bayes\cite{Xu2017}, Decision Trees\cite{Safavian1991}, Logistic Regression\cite{Genkin2007} and Support Vector Machine (SVM)\cite{boser1992, cortesvapnik1995} were proposed with the concept of using the probability of tokens to predict if a document belongs to a specific class. 
 
 These approaches are easy to implement and perform best with a small amount of data. Besides advantages, shallow models have some disadvantages by requiring a feature engineering step to be effective. Additionally, shallow learning method's output are depending on the probability of each token, which is not capturing the general semantics of a complex document.
 
 \subsection{Deep learning models}
 \subsubsection{Convolutional Neural Network (CNN)}
-Unlike shallow methods, deep learning methods automatically learn features from the data. Kim et al (2014) introduced a Convolutional Neural Network (CNN) approach, which uses a simple CNN with one layer of convolution on top of pre-trained word vectors\cite{Kim2014}. Using an unsupervised learning model, an input word is converted into a word representation vector in a contextual space and then stacked to form a sentence-representation matrix. The representation matrix then goes through a number of convolutional, pooling and fully connected layers with the final output being the probability distribution over labels.
+Unlike shallow methods, deep learning methods automatically learn features from the data. Kim et al (2014) introduced a Convolutional Neural Network (CNN) approach, which uses a simple CNN with one layer of convolution on top of pre-trained word vectors\cite{Kim2014}. Using an unsupervised learning model, an input word is converted into a word representation vector in a contextual space. These vectors are then stacked together to form a sentence-representation matrix. The representation matrix then goes through several convolutional layers with different filter sizes, pooling layers and fully connected layers with the final output being the probability distribution over labels.
 
 The architecture described in the work of Kim et al. (2014) is presented in Figure~\ref{fig:kim2014}
 
@@ -148,19 +150,19 @@ The architecture described in the work of Kim et al. (2014) is presented in Figu
 \resizebox{\textwidth}{!}{
 \includegraphics{cnn-classification.png}
 }
-\caption{The CNN for text classification architecture described in the work of Kim et al. (2014)\cite{Kim2014}}
+\caption{The CNN for Text Classification architecture described in the work of Kim et al. (2014)\cite{Kim2014}}
 \label{fig:kim2014}
 \end{figure}
 
 \subsubsection{Sequence-to-Sequence using Recurrent Neural Network (RNN)}
-Cho et al. (2014)\cite{Cho2014} and Sutskever et al. (2014)\cite{Sutskever2014} proposed an architecture named Sequence-to-Sequence (Seq2Seq) to solve the Machine Translation problem. Given an input sentence $s$ defined as a sequence of tokens $s_1, s_2, .., s_n$. The input sequence is fed into the Encoder, which is designed as a Recurrent Neural Network (RNN) to extract the context vector $h_s$ as the sentence-representation vector. The vector $h_s$ is then fed into the Decoder as the initial hidden state to generate the output sequence $s’_1, s’_2, .., s’_n$ as the translation of the sentence $s$ in a second language. An illustration of the proposed approach of Cho et al. (2014) and Sutskever et al. (2014) is presented in Figure~\ref{fig:seq2seq}
+Cho et al. (2014) and Sutskever et al. (2014)\cite{Cho2014, Sutskever2014} proposed an architecture named Sequence-to-Sequence (Seq2Seq) to solve the Machine Translation problem. Given an input sentence $s$ defined as a sequence of tokens $s_1, s_2, .., s_n$. The input sequence is fed into the Encoder, which is designed as a Recurrent Neural Network (RNN) to extract the context vector $h_s$ as the sentence-representation vector. The vector $h_s$ is then fed into the Decoder as the initial hidden state to generate the output sequence $s’_1, s’_2, .., s’_n$ as the translation of the sentence $s$ in a second language. An illustration of the proposed approach of Cho et al. (2014) and Sutskever et al. (2014) is presented in Figure~\ref{fig:seq2seq}
 
 \begin{figure}[htp]
 \centering
 \resizebox{\textwidth}{!}{
 \includegraphics{seq2seq.png}
 }
-\caption{The Sequence-to-Sequence architecture proposed by Cho et al. (2014)\cite{Cho2014}}
+\caption{The Sequence-to-Sequence architecture introduced by Cho et al. (2014) and Sutskever et al. (2014)\cite{Cho2014, Sutskever2014}}
 \label{fig:seq2seq}
 \end{figure}
 
@@ -175,15 +177,50 @@ Assuming the output vector $h_s$ of Encoder is the representation vector of sent
 \label{fig:seq2seq-classification}
 \end{figure}
 
-\subsubsection{Ensemble between CNN and LSTM}
+\subsubsection{CNN and LSTM ensemble}
+A combination of two previous approaches was introduced by Vo et al. (2017)\cite{Vo2017} for Vietnamese Text Classification. A sentence-representation matrix is fed into two different architectures including a CNN with different filter sizes and an LSTM Sequence-to-Sequence Encoder. The output vector of CNN is then concatenated with the hidden state output of the LSTM network to form a combination context vector, which would go through a fully connected layer to get the final probability distribution over classes. The complete architecture by Vo et al. (2017) is presented in Figure~\ref{fig:vo2017}
 
+\begin{figure}[htp]
+\centering
+\resizebox{\textwidth}{!}{
+\includegraphics{CNN-LSTM-ensemble.png}
+}
+\caption{CNN and LSTM ensemble architecture by Vo et al. (2017)\cite{Vo2017}}
+\label{fig:vo2017}
+\end{figure}
+
+\subsubsection{Transformer}
+Vaswani et al. (2017) introduced Transformer\cite{Vaswani2017} as an effective architecture for Machine Translation and can be applied to various downstream tasks. Some advantages of Transformer compared to Sequence-to-Sequence models include
+\begin{itemize}
+\item Sequence-to-Sequence models fail to Sequence-to-Sequence models fail to capture the context when the input sentence is too long. Using a mechanism called self-attention, Transformer can capture essential information inside a sentence independently from the sentence’s length.
+\item Transformer's design eliminates recurrent connections, resulting in faster training and better optimization.
+\item Transformer supports GPU and TPU training and deployment.
+\end{itemize}
+
+For detail, an input sentence is embedded with some additional information such as word position to form a matrix that represents the input sentence. The embedded input matrix is then fed into the Encoder, which transforms the input matrix into query ($Q$), key ($K$) and value ($V$) matrices. The relationship between words in a sentence is calculated with the scaled dot-product formula:
+
+\begin{equation}
+Z = \text{softmax}\left(\frac{QK^{\intercal}}{\sqrt{d_K}}\right)V
+\end{equation}
+
+where $d_K$ is the dimension of the key matrix $K$. The resulting matrix $Z$ then goes through some feedforward layers and add \& norm layers to form the context vector. A context matrix is formed by concatenating the output vectors of multiple $Q$, $K$, and $V$ matrices (multi-head attention), which represent the context of the input sentence.
+
+At the Decoder, the Encoder’s output matrix and the ground-truth sentence representation matrix go through masked self-attention and cross-attention layers to compute the relationship between them. The Decoder would manually predict a token at a timestep $t$, using the baseline information from the Encoder and previous predictions.
+
+An illustration of the Transformer architecture is presented in Figure~\ref{fig:transformer}
+
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=.5]{transformer.png}
+\caption{Transformer architecture by Vaswani et al. (2017)\cite{Vaswani2017}}
+\label{fig:transformer}
+\end{figure}
 
 \subsubsection{BERT}
+The Encoder of Transformer is then used to create an independent language model called Bidirectional Encoder Representations from Transformers (BERT)\cite{Devlin2019}.
 
 \subsubsection{XLNet}
-
-These models have shown state-of-the-art performance on many text classification tasks but require significantly more computational resources and data to train effectively. However, these models are highly scalable, making them suitable for processing large amounts of text data.
-
+sede vacante
 
 \section{Proposed method}\label{proposedmethod}
 sede vacante
@@ -193,11 +230,11 @@ sede vacante
 sede vacante
 
 \subsection{Dataset}
-Experiments were conducted on the TREC-6 dataset including 6000 sentences divided into training/testing sets with 5500 for training and 500 for testing. We use the TREC-6 training set for training and finetuning while evaluations were made on the testing set. The dataset’s statistics are briefly described in Table~\ref{tab:trec-6-insight}
+Experiments were conducted on the TREC dataset\cite{hovy2001, li2002} including 6000 sentences divided into training/testing sets with 5500 for training and 500 for testing. We use the TREC training set for training and finetuning while evaluations were made on the testing set. The dataset’s statistics are briefly described in Table~\ref{tab:trec-insight}
 
 \begin{table}[htp]
 \centering
-\caption{Insight of the TREC-6 dataset} \label{tab:trec-6-insight}
+\caption{Insight of the TREC dataset} \label{tab:trec-insight}
 \resizebox{\textwidth}{!}{
 \begin{tabular}{llllll}
 \hline
@@ -211,7 +248,43 @@ Experiments were conducted on the TREC-6 dataset including 6000 sentences divide
 sede vacante
 
 \subsection{Analysis}
-sede vacante
+\subsubsection{Metrics}
+We use Accuracy, Macro Precision, Macro Recall and Macro F1 Score as evaluation metrics. The definition of each metric is presented in the following sections
+
+\paragraph{Accuracy}
+Assuming the testing set has $n$ samples, let $\hat{y}_i$ and $y_i$ be the $i$-th sentence predicted label and ground-truth label respectively. Hence, the Accuracy metric will be defined as total correctly predicted labels / total labels, defined in Equation~\ref{eq:accuracy}.
+
+\begin{equation}\label{eq:accuracy}
+\text{Accuracy} = \frac{1}{n}\displaystyle\sum_{i = 1}^n (y_i = \hat{y_i})
+\end{equation}
+
+\paragraph{Precision, Recall and F1 Score}
+Given a class $C$, let $TP$ be the total correctly-labelled samples of class $C$ (\textit{true positive} samples); $FP$ be the total samples not belonging to but incorrectly labelled as $C$ (\textit{false positive} samples), and $FN$ be the total samples belonging to $C$ but incorrectly labelled as another class (\textit{false negative} samples). Hence, the Precision metric would be defined as Equation~\ref{eq:precision}
+\begin{equation}\label{eq:precision}
+\text{Precision (P)} = \frac{TP}{TP + FP}    
+\end{equation}
+the Recall metric would be defined as Equation~\ref{eq:recall}
+\begin{equation}\label{eq:recall}
+\text{Recall (R)} = \frac{TP}{TP + FN}
+\end{equation}
+and the F1 Score would be defined as Equation~\ref{eq:f1}
+\begin{equation}\label{eq:f1}
+\text{F1} = \frac{2PR}{P + R}
+\end{equation}
+
+\paragraph{Micro and Macro}
+Take an example of a classification problem with $n$ labels using Precision metric. With $TP_1, TP_2, .., TP_n$; $FP_1, FP_2, .., FP_n$ are total \textit{true positive} and \textit{false positive} samples of $n$ classes. The Micro Precision and Macro Precision metrics would be defined as Equation~\ref{eq:micro-macro-precision}
+
+\begin{equation}\label{eq:micro-macro-precision}
+\begin{aligned}
+\text{Precision}_{micro} &= \frac{TP_1 + TP_2 + .. + TP_n}{(TP_1 + FP_1) + (TP_2 + FP_2) + .. + (TP_n + FP_n)} \\
+&= \frac{\displaystyle\sum_{i = 1}^n TP_i}{\displaystyle\sum_{i = 1}^n (TP_i + FP_i)} \\
+\text{Precision}_{macro} &= \frac{1}{n}\left[\left(\frac{TP_1}{TP_1 + FP_1}\right) + \left(\frac{TP_2}{TP_2 + FP_2}\right) + .. + \left(\frac{TP_n}{TP_n + FP_n}\right)\right] \\
+&= \frac{1}{n}\sum_{i = 1}^n \frac{TP_i}{TP_i + FP_i}
+\end{aligned}
+\end{equation}
+
+\subsubsection{Results}
 
 \subsection{Discussions}
 sede vacante
