@@ -153,7 +153,9 @@
 
 
 \section{Introduction}\label{introduction}
-Text classification constitutes a crucial problem in the field of natural language processing (NLP). Its significance lies in its diverse range of applications, including but not limited to document organization, news filtering, spam detection, opinion mining, and computational phenotyping\cite{Aggarwal2012, Zeng2019}. Text representation plays a vital role in text classification, as it converts raw textual data into a format that can be efficiently processed by machine learning algorithms. Traditionally, text was represented using hand-crafted features such as sparse lexical features, for instance, bag-of-words and n-grams. However, recent advances in deep learning have resulted in the widespread use of convolutional neural networks (CNN)\cite{LeCun1998}, recurrent neural networks (RNN)\cite{Rumelhart1987}, and long short-term memory (LSTM)\cite{Hochreiter1997}, to learn text representations automatically. According to a recent paper by Gasparetto et al. (2022)\cite{Gasparetto2022}, using pre-trained language models such as BERT and RoBERTa can significantly improve text representation and enhance text classification performance. They reported state-of-the-art results on various benchmark datasets, demonstrating the superiority of deep learning-based methods over traditional feature-based approaches.
+Text classification constitutes a crucial problem in the field of natural language processing (NLP). Its significance lies in its diverse range of applications, including but not limited to document organization, news filtering, spam detection, opinion mining, and computational phenotyping\cite{Aggarwal2012, Zeng2019}. Text representation plays a vital role in text classification, as it converts raw textual data into a format that can be efficiently processed by machine learning algorithms. 
+
+Traditionally, text was represented using hand-crafted features such as sparse lexical features, for instance, bag-of-words and $n$-grams. However, recent advances in deep learning have resulted in the widespread use of convolutional neural networks (CNN)\cite{LeCun1998}, recurrent neural networks (RNN)\cite{Rumelhart1987}, and long short-term memory (LSTM)\cite{Hochreiter1997}, to learn text representations automatically. According to a recent paper by Gasparetto et al. (2022)\cite{Gasparetto2022}, using pre-trained language models such as BERT and RoBERTa can significantly improve text representation and enhance text classification performance. They reported state-of-the-art results on various benchmark datasets, demonstrating the superiority of deep learning-based methods over traditional feature-based approaches.
 
 Although autoencoding-based pre-trained models such as BERT or RoBERTa embrace the capacity of modelling directional context at scale, the size of these models presents a noticeable challenge. Because their depth necessitates a large number of parameters that must be loaded into memory. This is not solely limited to the training phase and may pose challenges in real-world scenarios, particularly when pre-trained models are employed for inference under low-latency constraints or fine-tuning in settings with limited resources. In order to overcome this challenge, various strategies have been devised to create more compact models with fewer parameters. One successful approach to achieve this objective is through knowledge distillation. 
 
@@ -204,7 +206,7 @@ Next, the outputs of DistilBERT model are a sequence of token embeddings. Subseq
 We compare our proposed model against multiple state-of-the-art text classification methods:
 \begin{itemize}
 \item \textbf{CNN}: The Convolutional Neural Network (CNN) approach was introduced by Kim et al (2014)\cite{Kim2014}. Using an unsupervised learning model, an input word is converted into a word representation vector in a contextual space. These vectors are then stacked together to form a sentence-representation matrix. Finally, using a simple CNN with one layer of convolution on top of pre-trained word vectors.
-\item \textbf{RNN}: Cho et al. (2014) and Sutskever et al. (2014)\cite{Cho2014, Sutskever2014} proposed an architecture named Sequence-to-Sequence (Seq2Seq) to solve the Machine Translation problem, then used in Text Classification.
+\item \textbf{RNN}: Cho et al. (2014)\cite{Cho2014} and Sutskever et al. (2014)\cite{Sutskever2014} proposed an architecture named Sequence-to-Sequence (Seq2Seq) to solve the Machine Translation problem, then used in Text Classification.
 \item \textbf{CNN + LSTM}: A combination of two previous well-known approaches was introduced by Vo et al. (2017)\cite{Vo2017} for Vietnamese Text Classification. An input sentence is fed into two different architectures including a CNN with different filter sizes and an LSTM Sequence-to-Sequence Encoder. The output vector of CNN is then concatenated with the hidden state output of the LSTM network to form a combination context vector, which would go through a fully connected layer to get the final probability distribution over classes.
 \item \textbf{Transformer}: Vaswani et al. (2017)\cite{Vaswani2017} introduced Transformer as an effective architecture for Machine Translation and can be applied to various downstream tasks. Some advantages of Transformer compared to Sequence-to-Sequence models include capturing essential information, eliminating recurrent connection, and supporting parallel computing.
 \item \textbf{BERT}: The Encoder of Transformer is then used to create an independent language model called Bidirectional Encoder Representations from Transformers (BERT)\cite{Devlin2019}.
@@ -212,8 +214,10 @@ We compare our proposed model against multiple state-of-the-art text classificat
 \end{itemize}
 
 \subsection{Dataset}
+We conduct experiments on 2 datasets: the TREC and the SST2 dataset. The details of each dataset will be present in following subsections:
+
 \subsubsection{The TREC dataset}
-Experiments were conducted on the TREC dataset\cite{hovy2001, li2002} including 6000 sentences divided into training/testing sets with 5500 for training and 500 for testing. We use the TREC training set for training and finetuning while evaluations were made on the testing set. The dataset’s statistics are briefly described in Table~\ref{tab:trec-insight}
+The TREC dataset\cite{hovy2001, li2002} has 6 coarse labels and includes 6000 sentences divided into training/testing sets with 5500 for training and 500 for testing. We use the TREC training subset for training and finetuning while evaluations were made on the testing subset. The dataset’s statistics are briefly described in Table~\ref{tab:trec-insight}
 
 \begin{table}
 \centering
@@ -225,7 +229,19 @@ Experiments were conducted on the TREC dataset\cite{hovy2001, li2002} including 
 \end{tabular*}
 \end{table}
 
-\subsubsection{The IMDb dataset}
+\subsubsection{The SST2 dataset}
+The SST2 dataset\cite{Socher2013} is a binary-class dataset made from 70042 sentences, divided into 3 training, validation, and testing subsets. The original testing set, however, is unlabeled, so we divide the training set into a ratio of 7:3 for training and validation and use the original validation set for testing. The SST2 dataset’s statistics are described in Table~\ref{tab:sst2-insight}
+
+\begin{table}
+\centering
+\caption{Insight of the SST2 dataset} \label{tab:sst2-insight}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}cccc}
+\toprule
+\textbf{Training} & \textbf{Validation} & \textbf{Testing} & \textbf{Labels} \\ \midrule
+47144              & 20205              & 872                      & 2 \\ \bottomrule
+\end{tabular*}
+\end{table}
+
 
 \subsection{Experiment setups}
 To guarantee objectivity and fairness, we run our experiments five times. The results nearly remain the same. We initialize the learning rate to 2e-3 and the weight decay to 0.01 for DistilBERT. 
@@ -270,47 +286,70 @@ Take an example of a classification problem with $n$ labels using Precision metr
 We use the same initial random seeds for every experiment. Table~\ref{tab:result} reports the Accuracy, Macro Precision, Macro Recall and Macro F1 of the baselines and the proposed method on both the TREC and IMDb testing sets.
 
 \begin{sidewaystable}
-\caption{Experiment results on the TREC dataset} \label{tab:result}
-\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
+\caption{Experiment metrics on testing sets} \label{tab:result}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccccc}
 \toprule
-\multicolumn{1}{c}{\textbf{Model}}                    & \multicolumn{1}{c}{\textbf{Accuracy}} & \multicolumn{1}{c}{\textbf{Precision (macro)}} & \multicolumn{1}{c}{\textbf{Recall (macro)}} & \multicolumn{1}{c}{\textbf{F1 score (macro)}} \\ \midrule
-Logistic Regression                                   & 0.852                                 & 0.831                                          & 0.897                                       & 0.856                                         \\
-Multinomial Naive Bayes                               & 0.832                                 & 0.704                                          & 0.699                                       & 0.697                                         \\
-Support Vector Classifier                             & 0.886                                 & 0.862                                          & 0.912                                       & 0.882                                         \\ \midrule
-BiGRU Seq2Seq            & 0.836                                 & 0.695                                          & 0.708                                       & 0.700                                         \\ \midrule
-CNN + random embedding                 & 0.726                                 & 0.809                                          & 0.684                                       & 0.718                                         \\
-CNN + fastText (freezed)                           & 0.924                                 & 0.933                                          & 0.898                                       & 0.912                                         \\
-CNN + fastText (trainable)                         & 0.910                                 & 0.922                                          & 0.885                                       & 0.899                                         \\
+& \multicolumn{4}{@{}c@{}}{\textbf{TREC}}& \multicolumn{4}{@{}c@{}}{\textbf{SST2}} \\\cmidrule{2-5}\cmidrule{6-9}%
+\multicolumn{1}{c}{\textbf{Model}}                    & \multicolumn{1}{c}{\textbf{Accuracy}} & \multicolumn{1}{c}{\textbf{Precision}} & \multicolumn{1}{c}{\textbf{Recall}} & \multicolumn{1}{c}{\textbf{F1}} & \multicolumn{1}{c}{\textbf{Accuracy}} & \multicolumn{1}{c}{\textbf{Precision}} & \multicolumn{1}{c}{\textbf{Recall}} & \multicolumn{1}{c}{\textbf{F1}}\\ \midrule
+Logistic Regression   & 0.852 & 0.831          & 0.897       & 0.856  & 0 & 0 & 0 & 0 \\
+Multinomial Naive Bayes   & 0.832 & 0.704          & 0.699       & 0.697  & 0 & 0 & 0 & 0        \\
+Support Vector Classifier & 0.886 & 0.862          & 0.912       & 0.882  & 0 & 0 & 0 & 0        \\ \midrule
+BiGRU Seq2Seq            & 0.836 & 0.695          & 0.708       & 0.700   & 0.765 & 0.766 & 0.764 & 0.764       \\ \midrule
+CNN + random embedding                 & 0.726 & 0.809          & 0.684       & 0.718   & 0.760 & 0.774 & 0.758& 0.756       \\
+CNN + fastText (freezed)   & 0.924 & 0.933          & 0.898       & 0.912    & 0.830 & 0.834 & 0.829 & 0.830      \\
+CNN + fastText (trainable) & 0.910 & 0.922          & 0.885       & 0.899   & 0.843 & 0.851 & 0.842 & 0.842       \\
 \midrule
-CNN + LSTM                           & 0.652                                 & 0.717                                          & 0.637                                       & 0.631                                         \\
-CNN + BiGRU + random embedding     & 0.676                                 & 0.717                                          & 0.701                                       & 0.689                                         \\
-CNN + BiGRU + fastText (freezed)   & 0.914                                 & 0.919                                          & 0.896                                       & 0.904                                         \\
-CNN + BiGRU + fastText (trainable) & 0.902                                 & 0.892                                          & 0.884                                       & 0.886                                         \\ \midrule
-Finetuned BERT                                 & 0.966                                 & 0.971                                          & 0.970                                       & 0.970                                         \\
-Finetuned XLM-RoBERTa                                 & 0.966                                 & 0.971                                          & 0.970                                       & 0.970                                         \\ \midrule
-Finetuned DistilBERT                                  & \textbf{0.974}                        & \textbf{0.976}                                 & \textbf{0.977}                              & \textbf{0.976}                                \\ \bottomrule
+CNN + LSTM + random embedding  & 0.652 & 0.717          & 0.637       & 0.631  & 0.734 & 0.741 & 0.735 & 0.733 \\
+CNN + BiGRU + random embedding     & 0.676 & 0.717          & 0.701       & 0.689  & 0.748 & 0.754 & 0.749 & 0.747 \\
+CNN + BiGRU + fastText (freezed)   & 0.914 & 0.919          & 0.896       & 0.904   & 0 & 0 & 0 & 0 \\
+CNN + BiGRU + fastText (trainable) & 0.902 & 0.892          & 0.884       & 0.886  & 0 & 0 & 0 & 0 \\ \midrule
+Finetuned BERT & \textbf{0.976} & \textbf{0.978} & \textbf{0.982} & \textbf{0.979}  & 0 & 0 & 0 & 0 \\
+Finetuned XLM-RoBERTa & 0.966 & 0.971          & 0.970       & 0.970  & 0 & 0 & 0 & 0 \\ \midrule
+Finetuned DistilBERT\footnotemark[1]  & 0.974& 0.976 & 0.977  & 0.976  & 0 & 0 & 0 & 0\\ \bottomrule
 \end{tabular*}
+\footnotetext[1]{Our proposed method}
 \end{sidewaystable}
 
-We measured the inference time on the TREC testing set using the Google Colab environment. DistilBERT performs slower than CNN and Seq2Seq approaches with the same initial seed but is faster than approaches using LLMs. The inference time of each model is presented in Table~\ref{tab:inference-TREC}
+We measured the inference time using the Google Colab environment. DistilBERT performs slower than CNN and Seq2Seq approaches with the same initial seed but is faster than approaches using LLMs. The inference time of each model on the TREC and SST2 testing sets are presented in Table~\ref{tab:inference-TREC} and Table~\ref{tab:inference-SST2}, respectively.
 
 \begin{table}
 \caption{Inference time on the TREC testing set}\label{tab:inference-TREC}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lc}
 \toprule
 \textbf{Model}                     & \textbf{Inference time (mean $\pm$ stdev)} \\ \midrule
-BiGRU Seq2Seq                      & 1.8119 $\pm$ 0.6681 ms                     \\ \midrule
-CNN + random embedding             & 1.6734 $\pm$ 0.3585 ms                     \\
-CNN + fastText (freezed)           & 1.6098 $\pm$ 0.3179 ms                     \\
-CNN + fastText (trainable)         & 1.6577 $\pm$ 0.4441 ms                     \\ \midrule
-CNN + LSTM + random embedding      & 5.6255 $\pm$ 0.7504 ms                     \\
-CNN + BiGRU + random embedding     & 11.3872 $\pm$ 3.0772 ms                    \\
-CNN + BiGRU + fastText (freezed)   & 10.2113 $\pm$ 1.4602 ms                    \\
-CNN + BiGRU + fastText (trainable) & 10.2700 $\pm$ 2.1868 ms                    \\ \midrule
-Finetuned BERT                     & 17.7249 $\pm$ 4.0707 ms                    \\
-Finetuned XLM-RoBERTa              & 16.9330 $\pm$ 8.9874 ms                    \\ \midrule
-Finetuned DistilBERT               & 9.7757 $\pm$ 2.4985 ms                     \\ \bottomrule
+BiGRU Seq2Seq                      & 1.812 $\pm$ 0.668 ms                     \\ \midrule
+CNN + random embedding             & 1.673 $\pm$ 0.359 ms                     \\
+CNN + fastText (freezed)           & 1.610 $\pm$ 0.318 ms                     \\
+CNN + fastText (trainable)         & 1.658 $\pm$ 0.444 ms                     \\ \midrule
+CNN + LSTM + random embedding      & 5.626 $\pm$ 0.750 ms                     \\
+CNN + BiGRU + random embedding     & 11.387 $\pm$ 3.077 ms                    \\
+CNN + BiGRU + fastText (freezed)   & 10.211 $\pm$ 1.460 ms                    \\
+CNN + BiGRU + fastText (trainable) & 10.270 $\pm$ 2.187 ms                    \\ \midrule
+Finetuned BERT                     & 17.725 $\pm$ 4.071 ms                    \\
+Finetuned XLM-RoBERTa              & 16.933 $\pm$ 8.987 ms                    \\ \midrule
+Finetuned DistilBERT\footnotemark[1]               & 9.776 $\pm$ 2.499 ms                     \\ \bottomrule
 \end{tabular*}
+\footnotetext[1]{Our proposed method}
+\end{table}
+
+\begin{table}
+\caption{Inference time on the SST2 testing set}\label{tab:inference-SST2}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lc}
+\toprule
+\textbf{Model}                     & \textbf{Inference time (mean $\pm$ stdev)} \\ \midrule
+BiGRU Seq2Seq                      & 3.394 $\pm$ 1.222 ms                     \\ \midrule
+CNN + random embedding             & 2.378 $\pm$ 0.747 ms                     \\
+CNN + fastText (freezed)           & 1.705 $\pm$ 0.379 ms                     \\
+CNN + fastText (trainable)         & 1.780 $\pm$ 0.329 ms                     \\ \midrule
+CNN + LSTM + random embedding      & 6.607 $\pm$ 1.010 ms                     \\
+CNN + BiGRU + random embedding     & 10.419 $\pm$ 1.635 ms                    \\
+CNN + BiGRU + fastText (freezed)   & 0                    \\
+CNN + BiGRU + fastText (trainable) & 0 \\ \midrule
+Finetuned BERT                     & 0  \\
+Finetuned XLM-RoBERTa              & 0  \\ \midrule
+Finetuned DistilBERT\footnotemark[1]               & 0 \\ \bottomrule
+\end{tabular*}
+\footnotetext[1]{Our proposed method}
 \end{table}
 
 \subsection{Analysis}
