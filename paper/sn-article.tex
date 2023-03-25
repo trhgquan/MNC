@@ -217,7 +217,7 @@ We compare our proposed model against multiple state-of-the-art text classificat
 We conduct experiments on 2 datasets: the TREC and the SST2 dataset. The details of each dataset will be present in following subsections:
 
 \subsubsection{The TREC dataset}
-The TREC dataset\cite{hovy2001, li2002} has 6 coarse labels and includes 6000 sentences divided into training/testing sets with 5500 for training and 500 for testing. We use the TREC training subset for training and finetuning while evaluations were made on the testing subset. The dataset’s statistics are briefly described in Table~\ref{tab:trec-insight}
+The TREC dataset\cite{hovy2001, li2002} has 6 coarse labels and includes 6000 sentences divided into training/testing sets with 5500 sentences for training and 500 sentences for testing. We use the TREC training subset for training and finetuning while evaluations were made on the testing subset. The dataset’s statistics are briefly described in Table~\ref{tab:trec-insight}
 
 \begin{table}[htp]
 \centering
@@ -291,9 +291,9 @@ We use the same initial random seeds for every experiment. Table~\ref{tab:result
 \toprule
 & \multicolumn{4}{@{}c@{}}{\textbf{TREC}}& \multicolumn{4}{@{}c@{}}{\textbf{SST2}} \\\cmidrule{2-5}\cmidrule{6-9}%
 \multicolumn{1}{c}{\textbf{Model}}                    & \multicolumn{1}{c}{\textbf{Accuracy}} & \multicolumn{1}{c}{\textbf{Precision}} & \multicolumn{1}{c}{\textbf{Recall}} & \multicolumn{1}{c}{\textbf{F1}} & \multicolumn{1}{c}{\textbf{Accuracy}} & \multicolumn{1}{c}{\textbf{Precision}} & \multicolumn{1}{c}{\textbf{Recall}} & \multicolumn{1}{c}{\textbf{F1}}\\ \midrule
-Logistic Regression   & 0.852 & 0.831          & 0.897       & 0.856  & 0 & 0 & 0 & 0 \\
-Multinomial Naive Bayes   & 0.832 & 0.704          & 0.699       & 0.697  & 0 & 0 & 0 & 0        \\
-Support Vector Classifier & 0.886 & 0.862          & 0.912       & 0.882  & 0 & 0 & 0 & 0        \\ \midrule
+Logistic Regression   & 0.852 & 0.831          & 0.897       & 0.856  & 0.807 & 0.806 & 0.810 & 0.807 \\
+Multinomial Naive Bayes   & 0.832 & 0.704          & 0.699       & 0.697  & 0.808 & 0.807 & 0.819 & 0.806        \\
+Support Vector Classifier & 0.886 & 0.862          & 0.912       & 0.882  & 0.829 & 0.829 & 0.830 & 0.829        \\ \midrule
 BiGRU Seq2Seq            & 0.836 & 0.695          & 0.708       & 0.700   & 0.765 & 0.766 & 0.764 & 0.764       \\ \midrule
 CNN + random embedding                 & 0.726 & 0.809          & 0.684       & 0.718   & 0.760 & 0.774 & 0.758& 0.756       \\
 CNN + fastText (freezed)   & 0.924 & 0.933          & 0.898       & 0.912    & 0.830 & 0.834 & 0.829 & 0.830      \\
