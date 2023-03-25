@@ -129,7 +129,7 @@
 %% sample for unstructured abstract %%
 %%==================================%%
 
-\abstract{Text classification has been a fundamental task dating back to the early days of Natural Language Processing and has received increased attention in recent academic literature. This task is the process of categorizing text documents into predefined classes or categories based on their content. Currently, the invention of large language models such as BERT, RoBERTa, XLM, and others has started a revolution in Natural Language Processing, specifically in Text Classification and text-related tasks. However, these models require an enormous textual dataset, a high-cost training environment, and a long training time to achieve a notable result. This paper presents a novel approach to Text Classification using a lighter, cheaper, faster version of BERT called DistilBERT. By fine-tuning DistilBERT for the Text Classification task, we achieved a state-of-the-art result of 97,40\%, 97,61\%, 97,74\%, and 97,64\% in accuracy, macro precision, macro recall, and macro F1 respectively. With these evaluation metrics, our model outperformed the current state-of-the-art language model and other approaches in the text classification task.}
+\abstract{Text classification has been a fundamental task dating back to the early days of Natural Language Processing and has received increased attention in recent academic literature. This task is the process of categorizing text documents into predefined classes or categories based on their content. Currently, the invention of large language models such as BERT, RoBERTa, XLM, and others has started a revolution in Natural Language Processing, specifically in Text Classification and text-related tasks. However, these models require an enormous textual dataset, a high-cost training environment, and a long training time to achieve a notable result. This paper presents a novel approach to Text Classification using a lighter, cheaper, faster version of BERT called DistilBERT. By fine-tuning DistilBERT for the Text Classification task, we achieved a state-of-the-art result of 97.40\%, 97.61\%, 97.74\%, and 97.64\% in accuracy, macro precision, macro recall, and macro F1 respectively. With these evaluation metrics, our model outperformed the current state-of-the-art language model and other approaches in the text classification task.}
 
 %%================================%%
 %% Sample for structured abstract %%
@@ -155,11 +155,11 @@
 \section{Introduction}\label{introduction}
 Text classification constitutes a crucial problem in the field of natural language processing (NLP). Its significance lies in its diverse range of applications, including but not limited to document organization, news filtering, spam detection, opinion mining, and computational phenotyping\cite{Aggarwal2012, Zeng2019}. Text representation plays a vital role in text classification, as it converts raw textual data into a format that can be efficiently processed by machine learning algorithms. 
 
-Traditionally, text was represented using hand-crafted features such as sparse lexical features, for instance, bag-of-words and $n$-grams. However, recent advances in deep learning have resulted in the widespread use of convolutional neural networks (CNN)\cite{LeCun1998}, recurrent neural networks (RNN)\cite{Rumelhart1987}, and long short-term memory (LSTM)\cite{Hochreiter1997}, to learn text representations automatically. According to a recent paper by Gasparetto et al. (2022)\cite{Gasparetto2022}, using pre-trained language models such as BERT and RoBERTa can significantly improve text representation and enhance text classification performance. They reported state-of-the-art results on various benchmark datasets, demonstrating the superiority of deep learning-based methods over traditional feature-based approaches.
+Traditionally, text was represented using hand-crafted features such as sparse lexical features, for instance, bag-of-words and $n$-grams. However, recent advances in deep learning have resulted in the widespread use of convolutional neural networks (CNN)\cite{LeCun1998}, recurrent neural networks (RNN)\cite{Rumelhart1987}, and long short-term memory (LSTM)\cite{Hochreiter1997}, to learn text representations automatically. According to a recent paper by Gasparetto et al. (2022)\cite{Gasparetto2022}, using pre-trained language models such as BERT\cite{Devlin2019} and RoBERTa\cite{Liu2019} can significantly improve text representation and enhance text classification performance. They reported state-of-the-art results on various benchmark datasets, demonstrating the superiority of deep learning-based methods over traditional feature-based approaches.
 
 Although autoencoding-based pre-trained models such as BERT or RoBERTa embrace the capacity of modelling directional context at scale, the size of these models presents a noticeable challenge. Because their depth necessitates a large number of parameters that must be loaded into memory. This is not solely limited to the training phase and may pose challenges in real-world scenarios, particularly when pre-trained models are employed for inference under low-latency constraints or fine-tuning in settings with limited resources. In order to overcome this challenge, various strategies have been devised to create more compact models with fewer parameters. One successful approach to achieve this objective is through knowledge distillation. 
 
-In this paper, based on these observations, we innovatively propose an approach to the Text Classification problem by adapting a distilled version of BERT, which is called DistilBERT. To the best of our knowledge, we are the first to adapt DistilBERT to solve the Text Classification problem. Our proposal shows its nearly equivalent performance as BERT while considerably reducing the number of parameters. Our code is available at: \href{https://github.com/trhgquan/MNC}{https://github.com/trhgquan/MNC}
+In this paper, based on these observations, we innovatively propose an approach to the Text Classification problem by adapting a distilled version of BERT, which is called DistilBERT\cite{Sanh2019}. To the best of our knowledge, we are the first to adapt DistilBERT to solve the Text Classification problem. Our proposal shows its nearly equivalent performance as BERT while considerably reducing the number of parameters. Our code is available at: \href{https://github.com/trhgquan/MNC}{https://github.com/trhgquan/MNC}
 
 The trained weights, in conjunction with the training code available in the Transformers library from HuggingFace (Wolf et al., 2019)\cite{Wolf2019}, have been employed to facilitate the fine-tuning process on domain-specific datasets.
 
@@ -283,7 +283,7 @@ Take an example of a classification problem with $n$ labels using Precision metr
 \end{equation}
 
 \subsubsection{Results}
-We use the same initial random seeds for every experiment. Table~\ref{tab:result} reports the Accuracy, Macro Precision, Macro Recall and Macro F1 of the baselines and the proposed method on both the TREC and IMDb testing sets.
+We use the same initial random seeds for every experiment. Table~\ref{tab:result} reports the Accuracy, Macro Precision, Macro Recall and Macro F1 of the baselines and the proposed method on both the TREC and SST2 testing sets.
 
 \begin{sidewaystable}
 \caption{Experiment metrics on testing sets} \label{tab:result}
@@ -301,53 +301,56 @@ CNN + fastText (trainable) & 0.910 & 0.922          & 0.885       & 0.899   & 0.
 \midrule
 CNN + LSTM + random embedding  & 0.652 & 0.717          & 0.637       & 0.631  & 0.734 & 0.741 & 0.735 & 0.733 \\
 CNN + BiGRU + random embedding     & 0.676 & 0.717          & 0.701       & 0.689  & 0.748 & 0.754 & 0.749 & 0.747 \\
-CNN + BiGRU + fastText (freezed)   & 0.914 & 0.919          & 0.896       & 0.904   & 0 & 0 & 0 & 0 \\
-CNN + BiGRU + fastText (trainable) & 0.902 & 0.892          & 0.884       & 0.886  & 0 & 0 & 0 & 0 \\ \midrule
-Finetuned BERT & \textbf{0.976} & \textbf{0.978} & \textbf{0.982} & \textbf{0.979}  & 0 & 0 & 0 & 0 \\
-Finetuned XLM-RoBERTa & 0.966 & 0.971          & 0.970       & 0.970  & 0 & 0 & 0 & 0 \\ \midrule
-Finetuned DistilBERT\footnotemark[1]  & 0.974& 0.976 & 0.977  & 0.976  & 0 & 0 & 0 & 0\\ \bottomrule
+CNN + BiGRU + fastText (freezed)   & 0.914 & 0.919          & 0.896       & 0.904   & 0.815 & 0.818 & 0.816 & 0.815 \\
+CNN + BiGRU + fastText (trainable) & 0.902 & 0.892          & 0.884       & 0.886  & 0.806 & 0.813 & 0.805 & 0.805 \\ \midrule
+Finetuned BERT & \textbf{0.976} & \textbf{0.978} & \textbf{0.982} & \textbf{0.979}  & 0.906 & 0.905 & 0.909 & 0.906 \\
+Finetuned XLM-RoBERTa & 0.966 & 0.971          & 0.970       & 0.970  & \textbf{0.911} & \textbf{0.911} & \textbf{0.911} & \textbf{0.911} \\ \midrule
+Finetuned DistilBERT\footnotemark[1]  & 0.974 & 0.976 & 0.977  & 0.976  & 0.905 & 0.904 & 0.906 & 0.905\\ \bottomrule
 \end{tabular*}
 \footnotetext[1]{Our proposed method}
 \end{sidewaystable}
 
-We measured the inference time using the Google Colab environment. DistilBERT performs slower than CNN and Seq2Seq approaches with the same initial seed but is faster than approaches using LLMs. The inference time of each model on the TREC and SST2 testing sets are presented in Table~\ref{tab:inference-TREC} and Table~\ref{tab:inference-SST2}, respectively.
+We also measured the inference time and total trainable parameters of deep approaches using the Google Colab environment. DistilBERT performs slower than CNN and Seq2Seq approaches with the same initial seed but is faster than approaches using LLMs. The inference time and total parameters of each model on the TREC and SST2 testing sets are presented in Table~\ref{tab:inference-result} and Table~\ref{tab:parameters-result}. 
 
 \begin{table}
-\caption{Inference time on the TREC testing set}\label{tab:inference-TREC}
-\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lc}
+\caption{Inference time of deep learning approaches on testing sets}\label{tab:inference-result}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccc}
 \toprule
-\textbf{Model}                     & \textbf{Inference time (mean $\pm$ stdev)} \\ \midrule
-BiGRU Seq2Seq                      & 1.812 $\pm$ 0.668 ms                     \\ \midrule
-CNN + random embedding             & 1.673 $\pm$ 0.359 ms                     \\
-CNN + fastText (freezed)           & 1.610 $\pm$ 0.318 ms                     \\
-CNN + fastText (trainable)         & 1.658 $\pm$ 0.444 ms                     \\ \midrule
-CNN + LSTM + random embedding      & 5.626 $\pm$ 0.750 ms                     \\
-CNN + BiGRU + random embedding     & 11.387 $\pm$ 3.077 ms                    \\
-CNN + BiGRU + fastText (freezed)   & 10.211 $\pm$ 1.460 ms                    \\
-CNN + BiGRU + fastText (trainable) & 10.270 $\pm$ 2.187 ms                    \\ \midrule
-Finetuned BERT                     & 17.725 $\pm$ 4.071 ms                    \\
-Finetuned XLM-RoBERTa              & 16.933 $\pm$ 8.987 ms                    \\ \midrule
-Finetuned DistilBERT\footnotemark[1]               & 9.776 $\pm$ 2.499 ms                     \\ \bottomrule
+ & \multicolumn{2}{@{}c@{}}{\textbf{Inference time\footnotemark[1]}} \\ \cmidrule{2-3}%
+\textbf{Model}  & \textbf{TREC}  & \textbf{SST2}\\ \midrule
+BiGRU Seq2Seq                      & 1.812 $\pm$ 0.668 ms &  3.394 $\pm$ 1.222 ms                     \\ \midrule
+CNN + random embedding             & 1.673 $\pm$ 0.359 ms & 2.378 $\pm$ 0.747 ms                  \\
+CNN + fastText (freezed)           & 1.610 $\pm$ 0.318 ms & 1.705 $\pm$ 0.379 ms                     \\
+CNN + fastText (trainable)         & 1.658 $\pm$ 0.444 ms & 1.780 $\pm$ 0.329 ms                    \\ \midrule
+CNN + LSTM + random embedding      & 5.626 $\pm$ 0.750 ms & 6.607 $\pm$ 1.010 ms                   \\
+CNN + BiGRU + random embedding     & 11.387 $\pm$ 3.077 ms & 10.419 $\pm$ 1.635 ms                   \\
+CNN + BiGRU + fastText (freezed)   & 10.211 $\pm$ 1.460 ms & 11.769 $\pm$ 3.032 ms                  \\
+CNN + BiGRU + fastText (trainable) & 10.270 $\pm$ 2.187 ms & 13.386 $\pm$ 3.206 ms                  \\ \midrule
+Finetuned BERT                     & 17.725 $\pm$ 4.071 ms & 16.984 $\pm$ 4.228 ms                  \\
+Finetuned XLM-RoBERTa              & 16.933 $\pm$ 8.987 ms & 15.848 $\pm$ 3.840 ms                  \\ \midrule
+Finetuned DistilBERT\footnotemark[2]               & 9.776 $\pm$ 2.499 ms & 9.629 $\pm$ 6.478 ms                    \\ \bottomrule
 \end{tabular*}
-\footnotetext[1]{Our proposed method}
+\footnotetext[1]{Mean $\pm$ stdev}
+\footnotetext[2]{Our proposed method}
 \end{table}
 
 \begin{table}
-\caption{Inference time on the SST2 testing set}\label{tab:inference-SST2}
-\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lc}
+\caption{Total parameters of deep learning approaches}\label{tab:parameters-result}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccc}
 \toprule
-\textbf{Model}                     & \textbf{Inference time (mean $\pm$ stdev)} \\ \midrule
-BiGRU Seq2Seq                      & 3.394 $\pm$ 1.222 ms                     \\ \midrule
-CNN + random embedding             & 2.378 $\pm$ 0.747 ms                     \\
-CNN + fastText (freezed)           & 1.705 $\pm$ 0.379 ms                     \\
-CNN + fastText (trainable)         & 1.780 $\pm$ 0.329 ms                     \\ \midrule
-CNN + LSTM + random embedding      & 6.607 $\pm$ 1.010 ms                     \\
-CNN + BiGRU + random embedding     & 10.419 $\pm$ 1.635 ms                    \\
-CNN + BiGRU + fastText (freezed)   & 0                    \\
-CNN + BiGRU + fastText (trainable) & 0 \\ \midrule
-Finetuned BERT                     & 0  \\
-Finetuned XLM-RoBERTa              & 0  \\ \midrule
-Finetuned DistilBERT\footnotemark[1]               & 0 \\ \bottomrule
+ & \multicolumn{2}{@{}c@{}}{\textbf{Total parameters}} \\ \cmidrule{2-3}%
+\textbf{Model}  & \textbf{TREC}  & \textbf{SST2}\\ \midrule
+BiGRU Seq2Seq                      & 0 &  20,254,722                     \\ \midrule
+CNN + random embedding             & 0 & 4,802,702                  \\
+CNN + fastText (freezed)           & 0 & 360,902                     \\
+CNN + fastText (trainable)         & 0 & 4,802,702                    \\ \midrule
+CNN + LSTM + random embedding      & 0 & 6,568,012                   \\
+CNN + BiGRU + random embedding     & 0 & 6,652,492                   \\
+CNN + BiGRU + fastText (freezed)   & 0 & 986,892                  \\
+CNN + BiGRU + fastText (trainable) & 0 & 9,870,492                 \\ \midrule
+Finetuned BERT                     & 0 & 108,311,810                  \\
+Finetuned XLM-RoBERTa              & 0 & 278,045,186                  \\ \midrule
+Finetuned DistilBERT\footnotemark[1]               & 0 & 65,783,042                    \\ \bottomrule
 \end{tabular*}
 \footnotetext[1]{Our proposed method}
 \end{table}
