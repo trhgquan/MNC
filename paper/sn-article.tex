@@ -185,7 +185,7 @@ Early approach to the Text Classification problem using rule-based systems where
 These approaches are easy to implement and perform best with a small amount of data. Besides advantages, shallow models have some disadvantages by requiring a feature engineering step to be effective. Additionally, shallow learning models are depending on the probability of each token, which is not capturing the general semantics of a complex document.
 
 \subsection{Deep learning models}
-Deep learning approaches, on the other hand, learn features automatically from the data, eliminating the need for extensive feature engineering. These methods include Convolutional Neural Networks (CNN)\cite{Kim2014}, Recurrent Neural Networks (RNN)\cite{Cho2014, Sutskever2014}, combinations between CNN and RNN\cite{Vo2017}, and Transformer-based models (BERT, XLNet)\cite{Devlin2019, Yang2019}. These models have shown state-of-the-art performance on many text classification tasks but require significantly more computational resources and data to train effectively. However, these models are highly scalable, making them suitable for processing large amounts of text data.
+Deep learning approaches, on the other hand, learn features automatically from the data, eliminating the need for extensive feature engineering. These methods include Convolutional Neural Networks (CNN)\cite{Kim2014}, Recurrent Neural Networks (RNN)\cite{Sutskever2014}, combinations between CNN and RNN\cite{Vo2017}, and Transformer-based models (BERT, XLM)\cite{Devlin2019, Conneau2020}. These models have shown state-of-the-art performance on many text classification tasks but require significantly more computational resources and data to train effectively. However, these models are highly scalable, making them suitable for processing large amounts of text data.
 
 Our research is motivated by the application of knowledge distillation-based networks\cite{Gasparetto2022} in Text Classification, as previously explored in the literature. But we further investigate several perspectives of our proposal, including its compatibility, complexity, and efficiency.
 
@@ -205,12 +205,12 @@ Next, the outputs of DistilBERT model are a sequence of token embeddings. Subseq
 \subsection{Baselines}
 We compare our proposed model against multiple state-of-the-art text classification methods:
 \begin{itemize}
+\item \textbf{Shallow models}: Shallow text classification models include Logistic Regression, Naive Bayes, and Support Vector Machine. In contrast to deep learning methods, these models do not require a significant amount of training data to achieve a comparable result.
 \item \textbf{CNN}: The Convolutional Neural Network (CNN) approach was introduced by Kim et al (2014)\cite{Kim2014}. Using an unsupervised learning model, an input word is converted into a word representation vector in a contextual space. These vectors are then stacked together to form a sentence-representation matrix. Finally, using a simple CNN with one layer of convolution on top of pre-trained word vectors.
-\item \textbf{RNN}: Cho et al. (2014)\cite{Cho2014} and Sutskever et al. (2014)\cite{Sutskever2014} proposed an architecture named Sequence-to-Sequence (Seq2Seq) to solve the Machine Translation problem, then used in Text Classification.
-\item \textbf{CNN + LSTM}: A combination of two previous well-known approaches was introduced by Vo et al. (2017)\cite{Vo2017} for Vietnamese Text Classification. An input sentence is fed into two different architectures including a CNN with different filter sizes and an LSTM Sequence-to-Sequence Encoder. The output vector of CNN is then concatenated with the hidden state output of the LSTM network to form a combination context vector, which would go through a fully connected layer to get the final probability distribution over classes.
-\item \textbf{Transformer}: Vaswani et al. (2017)\cite{Vaswani2017} introduced Transformer as an effective architecture for Machine Translation and can be applied to various downstream tasks. Some advantages of Transformer compared to Sequence-to-Sequence models include capturing essential information, eliminating recurrent connection, and supporting parallel computing.
-\item \textbf{BERT}: The Encoder of Transformer is then used to create an independent language model called Bidirectional Encoder Representations from Transformers (BERT)\cite{Devlin2019}.
-\item \textbf{XLNet}: Although XLNet can be classified as an autoregressive model, it overcomes the lack of bi-directionality of previous autoregressive models. This model utilizes a generalized autoregressive pre-training methodology to determine the likelihood of a word token\cite{Yang2019}.
+\item \textbf{RNN and Sequence-to-Sequence}: Sutskever et al. (2014)\cite{Sutskever2014} proposed an architecture named Sequence-to-Sequence (Seq2Seq) to solve the Machine Translation problem, then used in Text Classification. In our experiments, we use Bidirectional Gated Recurrent Unit (BiGRU)\cite{Cho2014-GRU} instead of RNN blocks in the original work to fasten the training progress while ensuring the information is well-captured in both directions with Bidirectional architecture.
+\item \textbf{CNN + LSTM}: A combination of two previous well-known approaches was introduced by Vo et al. (2017)\cite{Vo2017} for Vietnamese Text Classification. An input sentence is fed into two different architectures including a CNN with different filter sizes and an LSTM Sequence-to-Sequence Encoder. The output vector of CNN is then concatenated with the hidden state output of the LSTM network to form a combination context vector, which would go through a fully connected layer to get the final probability distribution over classes. We implemented the original architecture by Vo et al (2017) and an improved version using BiGRU.
+\item \textbf{BERT}: Vaswani et al. (2017)\cite{Vaswani2017} introduced Transformer as an effective architecture for Machine Translation and can be applied to various downstream tasks. Some advantages of Transformer compared to Sequence-to-Sequence models include capturing essential information, eliminating recurrent connection, and supporting parallel computing. The Encoder of Transformer is then used to create an independent language model called Bidirectional Encoder Representations from Transformers (BERT)\cite{Devlin2019}.
+\item \textbf{XLM}: Conneau et al. (2020)\cite{Conneau2020} discovered that pretraining multilingual language models at scale leads to significant performance gains for a wide range of cross-lingual transfer tasks. As a result, XLM is introduced (trained on 100 languages with more than 2TB of filtered CommonCrawl data) which shows very strong benchmark results compared to monolingual models.
 \end{itemize}
 
 \subsection{Dataset}
@@ -230,7 +230,7 @@ The TREC dataset\cite{hovy2001, li2002} has 6 coarse labels and includes 6000 se
 \end{table}
 
 \subsubsection{The SST2 dataset}
-The SST2 dataset\cite{Socher2013} is a binary-class dataset made from 70042 sentences, divided into 3 training, validation, and testing subsets. The original testing set, however, is unlabeled, so we divide the training set into a ratio of 7:3 for training and validation and use the original validation set for testing. The SST2 dataset’s statistics are described in Table~\ref{tab:sst2-insight}
+The SST2 dataset\cite{Socher2013} is a binary-class dataset made from 70042 sentences, divided into 3 training, validation, and testing subsets. The original testing set, however, is unlabeled, so we divide the training set into a ratio of 7:3 for training and validation and use the original validation set for testing. The SST2 dataset’s insights are described in Table~\ref{tab:sst2-insight}
 
 \begin{table}[htp]
 \centering
@@ -243,10 +243,34 @@ The SST2 dataset\cite{Socher2013} is a binary-class dataset made from 70042 sent
 \end{table}
 
 
-\subsection{Experiment setups}
-To guarantee objectivity and fairness, we run our experiments five times. The results nearly remain the same. We initialize the learning rate to 2e-3 and the weight decay to 0.01 for DistilBERT. 
+\subsection{Experimental Setup}
+\subsubsection{Training strategy}
+\paragraph{Shallow models}
+We build a data pipeline using \texttt{sklearn} (Pedregosa et al., 2011)\cite{Pedregosa2011} CountVectorizer with the $n$-grams range of 1 and 2; combined with TfidfTransformer with inverse-document-frequency reweighting enabled. The classifiers used in the experiments are Logistic Regression with L2 penalty, Naive Bayes, and Support Vector Classifier.
 
-\subsubsection{Metrics}
+\paragraph{BiGRU Seq2Seq} 
+Based on the architecture proposed by Sutskever et al. (2014), we replicated a Seq2Seq architecture with random embedding size of 256, 4 BiGRU layers with a hidden size of 512, and a dropout rate of 0.5. Training is set to 1000 epochs with early stopping after 20 epochs, batch size of 64, and learning rate of 0.001. The optimizer is Adam, with a learning rate decay step size of 1 and multiplicative factor of 0.1
+
+\paragraph{CNN} 
+Following Kim et al. (2014), we use filter sizes of 2, 3, and 4 with 2 filters each. The dropout rate is set at 0.5 while the learning rate is set at 0.25. In most CNN experiments, the optimizer used is AdaDelta with the \texttt{rho} coefficient set at 0.95. 
+
+We applied a method called fastText (Joulin et al., 2017)\cite{Joulin2017} designed for word representation to improve the original architecture by speeding up training progress while also improving training metrics. The embedding size in this scenario is fixed by fastText, while in the original architecture with random embedding, the dimension is fixed at 300. We trained 3 versions using random embeddings, non-trainable fastText embedding, and a trainable fastText embedding in 20 epochs under the same random seed.
+
+\paragraph{Ensemble of CNN and RNN}
+We employ the CNN and LSTM architecture by Vo et al. (2017). The filter sizes is set to 3, 4, and 5 with 150 filters each. We use the random embedding dimension of 200, and the LSTM hidden dimension of 100 with 128 hidden units. We set the dropout rate at 0.2, and the learning rate at 0.25 for 50 epochs of training under the same random seed.
+
+With the improved version, we replace LSTM with 128 hidden units BiGRU blocks and replacing the random embedding layer with a fastText embedding layer. The filter size is then updated to 3, 5, and 7 while the number of filters is set at 150. The learning rate in this scenario is 1, set for 50 epochs of training.
+
+\subsubsection{Finetuning strategy}
+We use \texttt{bert-base-uncased}\footnote{\url{https://huggingface.co/bert-base-uncased}} from Huggingface (originally has 110 millions parameters, trained on English corpora) as the pre-train model. With the finetuning strategy, we set the learning rate to 2e-5, the weight decay to 0.01, and the batch size to 16 while the number of training epochs are different on different datasets:
+\begin{itemize}
+\item On  the TREC dataset, we finetune BERT in 10 epochs with early stopping patience set to 3 epochs.
+\item On the SST2 dataset, due to the limitations of training hardware we set the training progress to stop after 1 epoch.
+\end{itemize}
+
+The finetuning of XLM-RoBERTa and DistilBERT use \texttt{xlm-roberta-base}\footnote{\url{https://huggingface.co/xlm-roberta-base}} and \texttt{distilbert-base-uncased}\footnote{\url{https://huggingface.co/distilbert-base-uncased}} from Huggingface as pre-train models, respectively. The finetuning strategy of each model on TREC and SST2 datasets is the same as finetuning BERT.
+
+\subsubsection{Evaluation Metrics}
 We use Accuracy, Macro Precision, Macro Recall and Macro F1 Score as evaluation metrics. The definition of each metric is presented in the following sections.
 
 \paragraph{Accuracy}
@@ -283,7 +307,7 @@ Take an example of a classification problem with $n$ labels using Precision metr
 \end{equation}
 
 \subsubsection{Results}
-We use the same initial random seeds for every experiment. Table~\ref{tab:result} reports the Accuracy, Macro Precision, Macro Recall and Macro F1 of the baselines and the proposed method on both the TREC and SST2 testing sets.
+We use the same initial random seeds for every experiment. To guarantee objectivity and fairness, we run our experiments five times. The results nearly remain the same. Table~\ref{tab:result} reports the Accuracy, Macro Precision, Macro Recall and Macro F1 of the baselines and the proposed method on both the TREC and SST2 testing sets.
 
 \begin{sidewaystable}[htp]
 \caption{Experiment metrics on testing sets} \label{tab:result}
@@ -296,12 +320,12 @@ Multinomial Naive Bayes   & 0.832 & 0.704          & 0.699       & 0.697  & 0.80
 Support Vector Classifier & 0.886 & 0.862          & 0.912       & 0.882  & 0.829 & 0.829 & 0.830 & 0.829        \\ \midrule
 BiGRU Seq2Seq            & 0.836 & 0.695          & 0.708       & 0.700   & 0.765 & 0.766 & 0.764 & 0.764       \\ \midrule
 CNN + random embedding                 & 0.726 & 0.809          & 0.684       & 0.718   & 0.760 & 0.774 & 0.758& 0.756       \\
-CNN + fastText (freezed)   & 0.924 & 0.933          & 0.898       & 0.912    & 0.830 & 0.834 & 0.829 & 0.830      \\
+CNN + fastText (freeze)   & 0.924 & 0.933          & 0.898       & 0.912    & 0.830 & 0.834 & 0.829 & 0.830      \\
 CNN + fastText (trainable) & 0.910 & 0.922          & 0.885       & 0.899   & 0.843 & 0.851 & 0.842 & 0.842       \\
 \midrule
 CNN + LSTM + random embedding  & 0.652 & 0.717          & 0.637       & 0.631  & 0.734 & 0.741 & 0.735 & 0.733 \\
 CNN + BiGRU + random embedding     & 0.676 & 0.717          & 0.701       & 0.689  & 0.748 & 0.754 & 0.749 & 0.747 \\
-CNN + BiGRU + fastText (freezed)   & 0.914 & 0.919          & 0.896       & 0.904   & 0.815 & 0.818 & 0.816 & 0.815 \\
+CNN + BiGRU + fastText (freeze)   & 0.914 & 0.919          & 0.896       & 0.904   & 0.815 & 0.818 & 0.816 & 0.815 \\
 CNN + BiGRU + fastText (trainable) & 0.902 & 0.892          & 0.884       & 0.886  & 0.806 & 0.813 & 0.805 & 0.805 \\ \midrule
 Finetuned BERT & \textbf{0.976} & \textbf{0.978} & \textbf{0.982} & \textbf{0.979}  & 0.906 & 0.905 & 0.909 & 0.906 \\
 Finetuned XLM-RoBERTa & 0.966 & 0.971          & 0.970       & 0.970  & \textbf{0.911} & \textbf{0.911} & \textbf{0.911} & \textbf{0.911} \\ \midrule
@@ -320,11 +344,11 @@ We also measured the inference time and total trainable parameters of deep appro
 \textbf{Model}  & \textbf{TREC}  & \textbf{SST2}\\ \midrule
 BiGRU Seq2Seq                      & 1.812 $\pm$ 0.668 ms &  3.394 $\pm$ 1.222 ms                     \\ \midrule
 CNN + random embedding             & 1.673 $\pm$ 0.359 ms & 2.378 $\pm$ 0.747 ms                  \\
-CNN + fastText (freezed)           & 1.610 $\pm$ 0.318 ms & 1.705 $\pm$ 0.379 ms                     \\
+CNN + fastText (freeze)           & 1.610 $\pm$ 0.318 ms & 1.705 $\pm$ 0.379 ms                     \\
 CNN + fastText (trainable)         & 1.658 $\pm$ 0.444 ms & 1.780 $\pm$ 0.329 ms                    \\ \midrule
 CNN + LSTM + random embedding      & 5.626 $\pm$ 0.750 ms & 6.607 $\pm$ 1.010 ms                   \\
 CNN + BiGRU + random embedding     & 11.387 $\pm$ 3.077 ms & 10.419 $\pm$ 1.635 ms                   \\
-CNN + BiGRU + fastText (freezed)   & 10.211 $\pm$ 1.460 ms & 11.769 $\pm$ 3.032 ms                  \\
+CNN + BiGRU + fastText (freeze)   & 10.211 $\pm$ 1.460 ms & 11.769 $\pm$ 3.032 ms                  \\
 CNN + BiGRU + fastText (trainable) & 10.270 $\pm$ 2.187 ms & 13.386 $\pm$ 3.206 ms                  \\ \midrule
 Finetuned BERT                     & 17.725 $\pm$ 4.071 ms & 16.984 $\pm$ 4.228 ms                  \\
 Finetuned XLM-RoBERTa              & 16.933 $\pm$ 8.987 ms & 15.848 $\pm$ 3.840 ms                  \\ \midrule
@@ -342,11 +366,11 @@ Finetuned DistilBERT\footnotemark[2]               & 9.776 $\pm$ 2.499 ms & 9.62
 \textbf{Model}  & \textbf{TREC}  & \textbf{SST2}\\ \midrule
 BiGRU Seq2Seq                      & 18,461,702 &  20,254,722                     \\ \midrule
 CNN + random embedding             & 3,192,606 & 4,802,702                  \\
-CNN + fastText (freezed)           & 362,106 & 360,902                     \\
+CNN + fastText (freeze)           & 362,106 & 360,902                     \\
 CNN + fastText (trainable)         & 3,192,606 & 4,802,702                    \\ \midrule
 CNN + LSTM + random embedding      & 4,420,416 & 6,568,012                   \\
 CNN + BiGRU + random embedding     & 4,504,896 & 6,652,492                   \\
-CNN + BiGRU + fastText (freezed)   & 987,696 & 986,892                  \\
+CNN + BiGRU + fastText (freeze)   & 987,696 & 986,892                  \\
 CNN + BiGRU + fastText (trainable) & 6,648,696 & 9,870,492                 \\ \midrule
 Finetuned BERT                     & 108,314,886 & 108,311,810                  \\
 Finetuned XLM-RoBERTa              & 278,048,262 & 278,045,186                  \\ \midrule
@@ -356,7 +380,14 @@ Finetuned DistilBERT\footnotemark[1]  & 65,786,118 & 65,783,042                 
 \end{table}
 
 \subsection{Analysis}
-sede vacante
+\subsubsection{Performance}
+We evaluate the Accuracy, Macro Precision, Macro Recall and Macro F1 of shallow and deep approaches on the testing sets, which result is shown in Table~\ref{tab:result}.
+
+\subsubsection{Inference time}
+We evaluate the inference time of the deep learning models on the testing sets; the results are shown in Table \ref{tab:inference-result}. It can be seen that the inference times of the CNN based models and the BiGRU Seq2Seq model give the best results, being relatively fast at less than 2 ms. However, they compensate for the low accuracy when compared to DitilBERT. As for the models combining CNNs, the inference time is higher than our proposal, while fine-tuned BERT or XLM-RoBERTa have almost twice the inference time of DistilBERT. When it comes to accuracy, DistillBERT gives nearly the same results as these two language models, but the inference time is twice as fast (approximately 9.5 ms). Therefore, it is more feasible to use the distilled knowledge based model in practical applications in terms of both accuracy and low latency.
+
+\subsubsection{Parameters}
+Table \ref{tab:parameters-result} shows the total number of parameters of the machine learning models on the two aforementioned datasets. CNN-related models have significantly low numbers—less than 7 million parameters. Notably, the combined model of CNN and BiGRU with the frozen fastText embeddings had the smallest number of parameters compared to the other models. Surprisingly, the BiGRU Seq2Seq model has a significantly higher number of parameters when compared to the CNN models, with slightly under 18.5 million on the TREC and just over 20.25 million on the SST2, in contrast to the fast inference time in the above analysis. In terms of language models, DistilBERT has enormously fewer parameters than BERT (about 40 million parameters) and about four times fewer than XLM-RoBERTa.
 
 \section{Conclusion and Future works}\label{conclusionandfutureworks}
 In this work, we propose DistilBERT, a cheaper, lighter, and faster version of BERT, for Text Classification. Even though reducing the number of layers (e.g., attention heads), DistilBERT still shows its efficiency by the comparable achievements. Besides, we analyze deeper into related aspects of this knowledge distillation-based model, including performance, inference, and complexity. However, in this work, we only focus on investigating the architecture used without considering how to integrate more useful information (e.g., structural or hierarchical) which is crucial for the model to capture more meaningful contextual features. We leave this for future research.

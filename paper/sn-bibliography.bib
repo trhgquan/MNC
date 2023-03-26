@@ -112,7 +112,7 @@ isbn="978-981-10-5041-1"
     doi = "10.3115/v1/D14-1181",
     pages = "1746--1751",
 }
-@inproceedings{Cho2014,
+@inproceedings{Cho2014-GRU,
     title = "Learning Phrase Representations using {RNN} Encoder{--}Decoder for Statistical Machine Translation",
     author = {Cho, Kyunghyun  and
       van Merri{\"e}nboer, Bart  and
@@ -143,16 +143,27 @@ numpages = {9},
 location = {Montreal, Canada},
 series = {NIPS'14}
 }
-@inbook{Yang2019,
-author = {Yang, Zhilin and Dai, Zihang and Yang, Yiming and Carbonell, Jaime and Salakhutdinov, Ruslan and Le, Quoc V.},
-title = {XLNet: Generalized Autoregressive Pretraining for Language Understanding},
-year = {2019},
-publisher = {Curran Associates Inc.},
-address = {Red Hook, NY, USA},
-abstract = {With the capability of modeling bidirectional contexts, denoising autoencoding based pretraining like BERT achieves better performance than pretraining approaches based on autoregressive language modeling. However, relying on corrupting the input with masks, BERT neglects dependency between the masked positions and suffers from a pretrain-finetune discrepancy. In light of these pros and cons, we propose XLNet, a generalized autoregressive pretraining method that (1) enables learning bidirectional contexts by maximizing the expected likelihood over all permutations of the factorization order and (2) overcomes the limitations of BERT thanks to its autoregressive formulation. Furthermore, XLNet integrates ideas from Transformer-XL, the state-of-the-art autoregressive model, into pretraining. Empirically, under comparable experiment setting, XLNet outperforms BERT on 20 tasks, often by a large margin, including question answering, natural language inference, sentiment analysis, and document ranking.},
-booktitle = {Proceedings of the 33rd International Conference on Neural Information Processing Systems},
-articleno = {517},
-numpages = {11}
+@inproceedings{Conneau2020,
+    title = "Unsupervised Cross-lingual Representation Learning at Scale",
+    author = "Conneau, Alexis  and
+      Khandelwal, Kartikay  and
+      Goyal, Naman  and
+      Chaudhary, Vishrav  and
+      Wenzek, Guillaume  and
+      Guzm{\'a}n, Francisco  and
+      Grave, Edouard  and
+      Ott, Myle  and
+      Zettlemoyer, Luke  and
+      Stoyanov, Veselin",
+    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2020.acl-main.747",
+    doi = "10.18653/v1/2020.acl-main.747",
+    pages = "8440--8451",
+    abstract = "This paper shows that pretraining multilingual language models at scale leads to significant performance gains for a wide range of cross-lingual transfer tasks. We train a Transformer-based masked language model on one hundred languages, using more than two terabytes of filtered CommonCrawl data. Our model, dubbed XLM-R, significantly outperforms multilingual BERT (mBERT) on a variety of cross-lingual benchmarks, including +14.6{\%} average accuracy on XNLI, +13{\%} average F1 score on MLQA, and +2.4{\%} F1 score on NER. XLM-R performs particularly well on low-resource languages, improving 15.7{\%} in XNLI accuracy for Swahili and 11.4{\%} for Urdu over previous XLM models. We also present a detailed empirical analysis of the key factors that are required to achieve these gains, including the trade-offs between (1) positive transfer and capacity dilution and (2) the performance of high and low resource languages at scale. Finally, we show, for the first time, the possibility of multilingual modeling without sacrificing per-language performance; XLM-R is very competitive with strong monolingual models on the GLUE and XNLI benchmarks. We will make our code and models publicly available.",
 }
 @INPROCEEDINGS{Vo2017,
   author={Vo, Quan-Hoang and Nguyen, Huy-Tien and Le, Bac and Nguyen, Minh-Le},
@@ -330,4 +341,30 @@ pages = "1631--1642",
   author={Liu, Yinhan and Ott, Myle and Goyal, Naman and Du, Jingfei and Joshi, Mandar and Chen, Danqi and Levy, Omer and Lewis, Mike and Zettlemoyer, Luke and Stoyanov, Veselin},
   journal={arXiv preprint arXiv:1907.11692},
   year={2019}
+}
+@InProceedings{Joulin2017,
+  title = "Bag of Tricks for Efficient Text Classification",
+    author = "Joulin, Armand  and
+      Grave, Edouard  and
+      Bojanowski, Piotr  and
+      Mikolov, Tomas",
+    booktitle = "Proceedings of the 15th Conference of the {E}uropean Chapter of the Association for Computational Linguistics: Volume 2, Short Papers",
+    month = apr,
+    year = "2017",
+    address = "Valencia, Spain",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/E17-2068",
+    pages = "427--431",
+    abstract = "This paper explores a simple and efficient baseline for text classification. Our experiments show that our fast text classifier fastText is often on par with deep learning classifiers in terms of accuracy, and many orders of magnitude faster for training and evaluation. We can train fastText on more than one billion words in less than ten minutes using a standard multicore CPU, and classify half a million sentences among 312K classes in less than a minute.",
+}
+@article{Pedregosa2011,
+ title={Scikit-learn: Machine Learning in {P}ython},
+ author={Pedregosa, F. and Varoquaux, G. and Gramfort, A. and Michel, V.
+         and Thirion, B. and Grisel, O. and Blondel, M. and Prettenhofer, P.
+         and Weiss, R. and Dubourg, V. and Vanderplas, J. and Passos, A. and
+         Cournapeau, D. and Brucher, M. and Perrot, M. and Duchesnay, E.},
+ journal={Journal of Machine Learning Research},
+ volume={12},
+ pages={2825--2830},
+ year={2011}
 }
