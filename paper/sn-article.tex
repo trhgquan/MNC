@@ -256,19 +256,19 @@ Following Kim et al. (2014), we use filter sizes of 2, 3, and 4 with 2 filters e
 
 We applied a method called fastText (Joulin et al., 2017)\cite{Joulin2017} designed for word representation to improve the original architecture by speeding up training progress while also improving training metrics. The embedding size in this scenario is fixed by fastText, while in the original architecture with random embedding, the dimension is fixed at 300. We trained 3 versions using random embeddings, non-trainable fastText embedding, and a trainable fastText embedding in 20 epochs under the same random seed.
 
-\paragraph{Ensemble of CNN and RNN}
-We employ the CNN and LSTM architecture by Vo et al. (2017). The filter sizes is set to 3, 4, and 5 with 150 filters each. We use the random embedding dimension of 200, and the LSTM hidden dimension of 100 with 128 hidden units. We set the dropout rate at 0.2, and the learning rate at 0.25 for 50 epochs of training under the same random seed.
+\paragraph{Multi-channel CNN with RNN}
+We employ the multi-channel CNN with LSTM architecture by Vo et al. (2017). The filter sizes is set to 3, 4, and 5 with 150 filters each. We use the random embedding dimension of 200, and the LSTM hidden dimension of 100 with 128 hidden units. We set the dropout rate at 0.2, and the learning rate at 0.25 for 50 epochs of training under the same random seed.
 
 With the improved version, we replace LSTM with 128 hidden units BiGRU blocks and replacing the random embedding layer with a fastText embedding layer. The filter size is then updated to 3, 5, and 7 while the number of filters is set at 150. The learning rate in this scenario is 1, set for 50 epochs of training.
 
 \subsubsection{Finetuning strategy}
-We use \texttt{bert-base-uncased}\footnote{\url{https://huggingface.co/bert-base-uncased}} from Huggingface (originally has 110 millions parameters, trained on English corpora) as the pre-train model. With the finetuning strategy, we set the learning rate to 2e-5, the weight decay to 0.01, and the batch size to 16 while the number of training epochs are different on different datasets:
+To finetune BERT, we use \texttt{bert-base-uncased}\footnote{\url{https://huggingface.co/bert-base-uncased}} from Huggingface (originally has 110 millions parameters, trained on English corpora) as the pre-train model. With the finetuning strategy, we set the learning rate to 2e-5, the weight decay to 0.01, and the batch size to 16 while the number of training epochs are different on different datasets:
 \begin{itemize}
 \item On  the TREC dataset, we finetune BERT in 10 epochs with early stopping patience set to 3 epochs.
 \item On the SST2 dataset, due to the limitations of training hardware we set the training progress to stop after 1 epoch.
 \end{itemize}
 
-The finetuning of XLM-RoBERTa and DistilBERT use \texttt{xlm-roberta-base}\footnote{\url{https://huggingface.co/xlm-roberta-base}} and \texttt{distilbert-base-uncased}\footnote{\url{https://huggingface.co/distilbert-base-uncased}} from Huggingface as pre-train models, respectively. The finetuning strategy of each model on TREC and SST2 datasets is the same as finetuning BERT.
+The finetuning of XLM-RoBERTa and DistilBERT use \texttt{xlm-roberta-base}\footnote{\url{https://huggingface.co/xlm-roberta-base}} and \texttt{distilbert-base-uncased}\footnote{\url{https://huggingface.co/distilbert-base-uncased}} from Huggingface as pre-train models, respectively. We use the same finetuning strategy with BERT to finetune XLM-RoBERTa and DistilBERT on TREC and SST2 datasets.
 
 \subsubsection{Evaluation Metrics}
 We use Accuracy, Macro Precision, Macro Recall and Macro F1 Score as evaluation metrics. The definition of each metric is presented in the following sections.
@@ -381,7 +381,7 @@ Finetuned DistilBERT\footnotemark[1]  & 65,786,118 & 65,783,042                 
 
 \subsection{Analysis}
 \subsubsection{Performance}
-We evaluate the Accuracy, Macro Precision, Macro Recall and Macro F1 of shallow and deep approaches on the testing sets, which result is shown in Table~\ref{tab:result}.
+We evaluated the Accuracy, Macro Precision, Macro Recall and Macro F1 of shallow and deep approaches on the testing sets. This results are shown in Table~\ref{tab:result}. Deep approaches may require a longer training period in order to achieve a comparable result, while shallow approaches may be able to achieve a competitive result with minimal data. A notable insight is that using pre-trained sentence embedding such as fastText can boost metrics dramatically. With the CNN and CNN-ensemble architectures, replacing the random embedding layer with the fastText layer can boost metrics from 10\% to 20\%. Observations suggest that pre-trained sentence embeddings, such as fastText, are capable of capturing context and semantics from a sentence independently of the text classification model since they were trained on a large amount of data. Even though DistilBERT cannot achieve the best results when it comes to language models, it is close to the ideal result which has been achieved by BERT or XLM-RoBERTa. This is considered a comparable result, since DistilBERT theoretically has 40\% less parameters than BERT but preserves 95\% of BERT's performance.
 
 \subsubsection{Inference time}
 We evaluate the inference time of the deep learning models on the testing sets; the results are shown in Table \ref{tab:inference-result}. It can be seen that the inference times of the CNN based models and the BiGRU Seq2Seq model give the best results, being relatively fast at less than 2 ms. However, they compensate for the low accuracy when compared to DitilBERT. As for the models combining CNNs, the inference time is higher than our proposal, while fine-tuned BERT or XLM-RoBERTa have almost twice the inference time of DistilBERT. When it comes to accuracy, DistillBERT gives nearly the same results as these two language models, but the inference time is twice as fast (approximately 9.5 ms). Therefore, it is more feasible to use the distilled knowledge based model in practical applications in terms of both accuracy and low latency.
