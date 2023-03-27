@@ -1,0 +1,39 @@
+\documentclass[12pt, aspectratio=149]{beamer}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+\mode<presentation>{
+\usetheme{Madrid}
+\setbeamercovered{transparent}
+\setbeamertemplate{navigation symbols}{}
+}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\title[DistilBERT for Text Classification]{DistilBERT: An Effectively Complexity-reduced Language Model for Text Classification}
+% \subtitle{Final Project in Scientific Research Methodology (MNC)}
+\logo{\includegraphics[scale=.3]{img/fithcmuslogo.png}}
+\author[PNTAn and THQuan]{Pham Ngoc Thien An and Tran Hoang Quan}
+\institute[fit@hcmus]{VNUHCM - University of Science}
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Table of Contents}
+\tableofcontents
+\end{frame}
+
+\input{content/introduction}
+\input{content/relatedworks}
+\input{content/proposedmethod}
+\input{content/experiments}
+\input{content/conclusion}
+
+\bibliographystyle{ieeetr}
+\bibliography{sample}
+
+\end{document}
