@@ -197,7 +197,7 @@ Next, the outputs of DistilBERT model are a sequence of token embeddings. Subseq
 \begin{figure}[htp]
 \centering
 \includegraphics[scale=.4]{distilbert.png}
-\caption{Our proposed method using DistilBERT architecture}
+\caption{The overall architecture of our proposed method using DistilBERT.}
 \label{fig:distilbert}
 \end{figure}
 
@@ -310,7 +310,7 @@ Take an example of a classification problem with $n$ labels using Precision metr
 We use the same initial random seeds for every experiment. To guarantee objectivity and fairness, we run our experiments five times. The results nearly remain the same. Table~\ref{tab:result} reports the Accuracy, Macro Precision, Macro Recall and Macro F1 of the baselines and the proposed method on both the TREC and SST2 testing sets.
 
 \begin{sidewaystable}[htp]
-\caption{Experiment metrics on testing sets} \label{tab:result}
+\caption{Experiment metrics two benchmark datasets. Bold indicates the highest scores.} \label{tab:result}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccccc}
 \toprule
 & \multicolumn{4}{@{}c@{}}{\textbf{TREC}}& \multicolumn{4}{@{}c@{}}{\textbf{SST2}} \\\cmidrule{2-5}\cmidrule{6-9}%
@@ -381,7 +381,7 @@ Finetuned DistilBERT\footnotemark[1]  & 65,786,118 & 65,783,042                 
 
 \subsection{Analysis}
 \subsubsection{Performance}
-We evaluated the Accuracy, Macro Precision, Macro Recall and Macro F1 of shallow and deep approaches on the testing sets. This results are shown in Table~\ref{tab:result}. Deep approaches may require a longer training period in order to achieve a comparable result, while shallow approaches may be able to achieve a competitive result with minimal data. A notable insight is that using pre-trained sentence embedding such as fastText can boost metrics dramatically. With the CNN and CNN-ensemble architectures, replacing the random embedding layer with the fastText layer can boost metrics from 10\% to 20\%. Observations suggest that pre-trained sentence embeddings, such as fastText, are capable of capturing context and semantics from a sentence independently of the text classification model since they were trained on a large amount of data. Even though DistilBERT cannot achieve the best results when it comes to language models, it is close to the ideal result which has been achieved by BERT or XLM-RoBERTa. This is considered a comparable result, since DistilBERT theoretically has 40\% less parameters than BERT but preserves 95\% of BERT's performance.
+We evaluate the Accuracy, Macro Precision, Macro Recall and Macro F1 of shallow and deep approaches on the testing sets. This results are shown in Table~\ref{tab:result}. Deep approaches may require a longer training period in order to achieve a comparable result, while shallow approaches may be able to achieve a competitive result with minimal data. A notable insight is that using pre-trained sentence embedding such as fastText can boost metrics dramatically. With the CNN and CNN-ensemble architectures, replacing the random embedding layer with the fastText layer can boost metrics from 10\% to 20\%. Observations suggest that pre-trained sentence embeddings, such as fastText, are capable of capturing context and semantics from a sentence independently of the text classification model since they were trained on a large amount of data. Even though DistilBERT cannot achieve the best results when it comes to language models, it is close to the ideal result which has been achieved by BERT or XLM-RoBERTa. This is considered a comparable result, since DistilBERT theoretically has 40\% less parameters than BERT but preserves 95\% of BERT's performance.
 
 \subsubsection{Inference time}
 We evaluate the inference time of the deep learning models on the testing sets; the results are shown in Table \ref{tab:inference-result}. It can be seen that the inference times of the CNN based models and the BiGRU Seq2Seq model give the best results, being relatively fast at less than 2 ms. However, they compensate for the low accuracy when compared to DitilBERT. As for the models combining CNNs, the inference time is higher than our proposal, while fine-tuned BERT or XLM-RoBERTa have almost twice the inference time of DistilBERT. When it comes to accuracy, DistillBERT gives nearly the same results as these two language models, but the inference time is twice as fast (approximately 9.5 ms). Therefore, it is more feasible to use the distilled knowledge based model in practical applications in terms of both accuracy and low latency.
