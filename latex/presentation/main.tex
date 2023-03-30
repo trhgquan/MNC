@@ -1,4 +1,4 @@
-\documentclass[12pt, aspectratio=149]{beamer}
+\documentclass[10pt, aspectratio=149]{beamer}
 
 % Language setting
 % Replace `english' with e.g. `spanish' to change the document language
@@ -12,12 +12,15 @@
 
 % Useful packages
 \usepackage{amsmath}
+\usepackage{booktabs}
 \usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{multicol}
 
 \title[DistilBERT for Text Classification]{DistilBERT: An Effectively Complexity-reduced Language Model for Text Classification}
 % \subtitle{Final Project in Scientific Research Methodology (MNC)}
-\logo{\includegraphics[scale=.3]{img/fithcmuslogo.png}}
-\author[PNTAn and THQuan]{Pham Ngoc Thien An and Tran Hoang Quan}
+% \logo{\includegraphics[scale=.3]{img/fithcmuslogo.png}}
+\author[PNTAn and THQuan]{Pham Ngoc Thien An (19127094) and Tran Hoang Quan (19120338)}
 \institute[fit@hcmus]{VNUHCM - University of Science}
 
 \begin{document}
@@ -33,7 +36,12 @@
 \input{content/experiments}
 \input{content/conclusion}
 
-\bibliographystyle{ieeetr}
-\bibliography{sample}
+% Citation
+\input{cite/bib}
+
+\begin{frame}[plain]
+\centering
+\Huge{\textbf{Thanks for your attention!}}
+\end{frame}
 
 \end{document}
