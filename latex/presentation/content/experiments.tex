@@ -46,12 +46,19 @@ We conduct experiments on two datasets TREC (multiclass) and SST2 (binary class)
 \framesubtitle{Metrics}
 
 We use Accuracy, Precision, Recall and F1 score as evaluation metrics.
-\begin{itemize}
-\item $Accuracy  = \displaystyle\frac{1}{n}\sum_{i = 1}^n (y_i = \hat{y_i})$
-\item $Precision\ (P) = \frac{TP}{TP + FP}$
-\item $Recall\ (R) = \frac{TP}{TP + FN}$
-\item $F_{1} = \frac{2PR}{P + R}$
-\end{itemize}
+\begin{equation}
+Accuracy  = \displaystyle\frac{1}{n}\sum_{i = 1}^n (y_i = \hat{y_i})
+\end{equation}
+
+With $TP, FP$ and $FN$ are True Positives, False Positives and False Negatives samples, respectively:
+
+\begin{equation}
+\begin{aligned}
+Precision\ (P) &= \frac{TP}{TP + FP} \\
+Recall\ (R) &= \frac{TP}{TP + FN} \\
+F_{1} &= \frac{2PR}{P + R}    
+\end{aligned}
+\end{equation}
 \end{frame}
 
 \begin{frame}{Experiments (cont.)}
