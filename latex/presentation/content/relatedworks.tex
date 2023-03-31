@@ -42,6 +42,7 @@ The Sequence-to-Sequence (Seq2Seq) architecture were introduced by Sutskever et 
 
 \begin{frame}{Related Works (cont.)}
 \framesubtitle{Deep methods -- CNN}
+Kim et al. (2014)\cite{Kim2014} used CNN with different filter sizes to build an efficient architecture for Text Classification.
 \begin{figure}
 \centering
 \resizebox{\linewidth}{!}{
@@ -53,6 +54,7 @@ The Sequence-to-Sequence (Seq2Seq) architecture were introduced by Sutskever et 
 
 \begin{frame}{Related Works (cont.)}
 \framesubtitle{Deep methods -- Multi-channel CNN and LSTM}
+Vo et al. (2017)\cite{Vo2017} proposed a method combines CNN and recurrent networks such as LSTM for Vietnamese Text Classification.
 \begin{figure}
 \centering
 \resizebox{\linewidth}{!}{
@@ -63,10 +65,12 @@ The Sequence-to-Sequence (Seq2Seq) architecture were introduced by Sutskever et 
 \end{frame}
 
 \begin{frame}{Related Works (cont.)}
-\framesubtitle{Deep methods -- Language Models (LMs)}
+\framesubtitle{Deep methods -- Large Language Models (LLMs)}
+Recently, deep large language models (LLMs -- e.g. BERT\cite{Devlin2019}, RoBERTa\cite{Liu2019}, XLM\cite{Conneau2020}, ..etc) have shown state-of-the-art performance on many text classification tasks. These models are highly scalable, making them suitable for processing large amounts of text data.
 
+\begin{figure}
+\centering
+\includegraphics[scale=.5]{img/BERT.jpg}
+\caption{The BERT architecture by Devlin et al. (2019)\cite{Devlin2019}}
+\end{figure}
 \end{frame}
-
-% \item Deep methods: CNN\cite{Kim2014}, RNN\cite{Sutskever2014}, Multi-channel CNN and LSTM\cite{Vo2017}, Transformer-based models (BERT\cite{Devlin2019}, RoBERTa\cite{Liu2019}, XLM\cite{Conneau2020}).
-% \end{itemize}
-% \end{frame}

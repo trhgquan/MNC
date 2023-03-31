@@ -1,7 +1,7 @@
 \section{Experiments}
 \begin{frame}{Experiments and Results}
 \framesubtitle{Baselines}
-We compare our proposed method to several approaches, including
+We compare our proposed method to multiple baseline methods, including
 \begin{itemize}
 \item Shallow approaches:
 \begin{itemize}
@@ -21,7 +21,7 @@ We compare our proposed method to several approaches, including
 \begin{frame}{Experiments (cont.)}
 \framesubtitle{Datasets}
 
-We conduct experiments on two datasets TREC (multiclass) and SST2 (binary class).
+We conduct experiments on two datasets: TREC (multiclass) and SST2 (binary class).
 
 \begin{table}
 \centering
@@ -29,7 +29,7 @@ We conduct experiments on two datasets TREC (multiclass) and SST2 (binary class)
 \textbf{Training} & \textbf{Testing} & \textbf{Coarse labels} \\ \hline%& \textbf{Fine class labels} & \textbf{Avg. length} & \textbf{Vocab. size} \\ \hline
 5500              & 500              & 6                    \\ \hline %  & 50                         & 10                   & 8700                 \\ \hline
 \end{tabular}
-\caption{Statistics of the TREC dataset} \label{tab:trec-insight}
+\caption{Statistics of the TREC dataset\cite{hovy2001, li2002}} \label{tab:trec-insight}
 \end{table}
 
 \begin{table}
@@ -38,7 +38,7 @@ We conduct experiments on two datasets TREC (multiclass) and SST2 (binary class)
 \textbf{Training} & \textbf{Validation} & \textbf{Testing} & \textbf{Labels} \\ \hline
 47144              & 20205              & 872                      & 2 \\ \hline
 \end{tabular}
-\caption{Statistics of the SST2 dataset} \label{tab:sst2-insight}
+\caption{Statistics of the SST2 dataset\cite{Socher2013}} \label{tab:sst2-insight}
 \end{table}
 \end{frame}
 
@@ -50,7 +50,7 @@ We use Accuracy, Precision, Recall and F1 score as evaluation metrics.
 Accuracy  = \displaystyle\frac{1}{n}\sum_{i = 1}^n (y_i = \hat{y_i})
 \end{equation}
 
-With $TP, FP$ and $FN$ are True Positives, False Positives and False Negatives samples, respectively:
+With $TP, FP$ and $FN$ are True Positive, False Positive and False Negative samples, respectively:
 
 \begin{equation}
 \begin{aligned}
