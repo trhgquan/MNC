@@ -13,7 +13,7 @@ We compare our proposed method to multiple baseline methods, including
 \begin{itemize}
 \item BiGRU Sequence-to-Sequence
 \item CNN and Multi-channel CNN with LSTM / BiGRU
-\item Finetuned LLMs: BERT and finetuned XLM-RoBERTa.
+\item Finetuned LLMs: BERT and XLM-RoBERTa.
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -61,12 +61,24 @@ F_{1} &= \frac{2PR}{P + R}
 \end{equation}
 \end{frame}
 
-\begin{frame}{Experiments (cont.)}
-\framesubtitle{Setup}
-\end{frame}
+% \begin{frame}{Experiments (cont.)}
+% \framesubtitle{Setup -- Shallow models}
+% TBD
+% \end{frame}
+
+
+% \begin{frame}{Experiments (cont.)}
+% \framesubtitle{Setup -- Deep models}
+% TBD
+% \end{frame}
+
+% \begin{frame}{Experiments (cont.)}
+% \framesubtitle{Setup -- Deep models}
+% TBD
+% \end{frame}
 
 \begin{frame}{Results}
-\framesubtitle{Performance Analysis - TREC dataset}
+\framesubtitle{Performance Analysis -- TREC dataset}
 
 \begin{table}
 \small{
@@ -94,7 +106,7 @@ Finetuned DistilBERT  & 0.974 & 0.976 & 0.977  & 0.976  \\ \hline
 \end{frame}
 
 \begin{frame}{Results (cont.)}
-\framesubtitle{Performance Analysis - SST2 dataset}
+\framesubtitle{Performance Analysis -- SST2 dataset}
 \begin{table}
 \small{
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
